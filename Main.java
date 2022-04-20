@@ -8,6 +8,8 @@ import java.util.concurrent.Future;
 
 public class Main {
 
+    public static final int processorCount = 3;
+
     public static void main(String[] args) throws Exception {
         int arrSize = 1_000_000;
         String[] unsorted = new String[arrSize];
@@ -16,11 +18,10 @@ public class Main {
 
         for ( int i = 0; i < arrSize; i++ ) {
             unsorted[i] = Integer.toString(randomizer.nextInt( 10_00000 ));
-            if (i < 20) System.out.println(unsorted[i]);
+//            if (i < 20) System.out.println(unsorted[i]);
         }
 
         List<Future> futures = new ArrayList<>();
-        int processorCount = Runtime.getRuntime().availableProcessors();
         int batchSize = arrSize/processorCount;
         long startTime = System.currentTimeMillis();
         // create ExecutorService
@@ -57,15 +58,15 @@ public class Main {
                 mergered = SimpleMerger.merge( mergered, part);
             }
         }
-        long timeSpent = System.currentTimeMillis() - startTime;
-        System.out.println("Program execution time is " + timeSpent + " milliseconds");
-        if (arrSize < 100) {System.out.print(Arrays.toString(mergered));}
-        startTime = System.currentTimeMillis();
-        Arrays.sort(unsorted);
-        timeSpent = System.currentTimeMillis() - startTime;
-        System.out.println("\n Program (non parallel )execution time is " + timeSpent + " milliseconds");
-        for (int i = 0; i < 20; i++) {
-            System.out.println(mergered[i]);
-        }
+//        long timeSpent = System.currentTimeMillis() - startTime;
+//        System.out.println("Program execution time is " + timeSpent + " milliseconds");
+//        if (arrSize < 100) {System.out.print(Arrays.toString(mergered));}
+//        startTime = System.currentTimeMillis();
+//        Arrays.sort(unsorted);
+//        timeSpent = System.currentTimeMillis() - startTime;
+//        System.out.println("\n Program (non parallel )execution time is " + timeSpent + " milliseconds");
+//        for (int i = 0; i < 20; i++) {
+//            System.out.println(mergered[i]);
+//        }
     }
 }
