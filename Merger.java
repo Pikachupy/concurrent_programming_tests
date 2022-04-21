@@ -1,6 +1,7 @@
 import java.util.Arrays;
+import java.util.concurrent.RecursiveAction;
 
-public class Merger implements Runnable{
+public class Merger extends RecursiveAction {
     private String[] unsorted, sorted;
 
     // number of threads
@@ -9,7 +10,7 @@ public class Merger implements Runnable{
         this.unsorted = unsorted;
     }
 
-    public void run() {
+    public void compute() {
         int middle;
         String[] left, right;
         // array is sorted
@@ -25,8 +26,7 @@ public class Merger implements Runnable{
             System.arraycopy(unsorted, middle, right, 0, unsorted.length - middle);
             SimpleMerger leftSort = new SimpleMerger(left);
             SimpleMerger rightSort = new SimpleMerger(right);
-            leftSort.sort();
-            rightSort.sort();
+            invokeAll(leftSort, rightSort);
             //sort and merge
             sorted = SimpleMerger.merge(leftSort.getSorted(), rightSort.getSorted());
         }

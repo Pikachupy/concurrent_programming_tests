@@ -1,6 +1,7 @@
 import java.util.Arrays;
+import java.util.concurrent.RecursiveAction;
 
-public class SimpleMerger {
+public class SimpleMerger extends RecursiveAction {
 
     private String[] unsorted, sorted;
 
@@ -9,7 +10,7 @@ public class SimpleMerger {
     }
 
     // split array on two part to sort
-    public void sort() {
+    public void compute() {
         int middle;
         String[] left, right;
 
